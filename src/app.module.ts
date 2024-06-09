@@ -6,6 +6,8 @@ import { AppService } from './app.service';
 import { Product } from './products/entities/product.entity';
 import { ProductsModule } from './products/products.module';
 import { BlacklistsModule } from './blacklists.module';
+import { Favorite } from './products/entities/favorite.entity';
+import { FavoritesModule } from './products/favorites.module';
 @Module({
   imports: [
     TypeOrmModule.forRoot({
@@ -15,10 +17,11 @@ import { BlacklistsModule } from './blacklists.module';
       username: 'postgres',
       password: '0000',
       database: 'test',
-      entities: [Product, Blacklist],
+      entities: [Product, Blacklist, Favorite],
       synchronize: true,
     }),
     BlacklistsModule,
+    FavoritesModule,
     ProductsModule,
   ],
   controllers: [AppController],
