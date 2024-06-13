@@ -8,6 +8,10 @@ import { ProductsModule } from './products/products.module';
 import { BlacklistsModule } from './blacklists.module';
 import { Favorite } from './products/entities/favorite.entity';
 import { FavoritesModule } from './products/favorites.module';
+import { History } from './products/entities/history.entity';
+import { HistorysModule } from './products/historys.module';
+import { Food } from './products/entities/food.entity';
+import { FoodsModule } from './products/foods.module';
 @Module({
   imports: [
     TypeOrmModule.forRoot({
@@ -17,12 +21,14 @@ import { FavoritesModule } from './products/favorites.module';
       username: 'postgres',
       password: '0000',
       database: 'test',
-      entities: [Product, Blacklist, Favorite],
+      entities: [Product, Blacklist, Favorite, History, Food],
       synchronize: true,
     }),
     BlacklistsModule,
     FavoritesModule,
     ProductsModule,
+    HistorysModule,
+    FoodsModule,
   ],
   controllers: [AppController],
   providers: [AppService],

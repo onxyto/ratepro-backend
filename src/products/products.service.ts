@@ -34,6 +34,7 @@ export class ProductsService {
     }
     return await this.ProductsRepository.remove(product);
   }
+
   findAll(): Promise<Product[]> {
     return this.ProductsRepository.find();
   }
