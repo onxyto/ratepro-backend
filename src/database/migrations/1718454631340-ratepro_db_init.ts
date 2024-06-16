@@ -38,6 +38,18 @@ export class RateproDbInit1718454631340 implements MigrationInterface {
             type: 'varchar',
           },
           {
+            name: 'type',
+            type: 'varchar',
+          },
+          {
+            name: 'description',
+            type: 'varchar',
+          },
+          {
+            name: 'storage_type',
+            type: 'varchar',
+          },
+          {
             name: 'rating',
             type: 'bigint',
           },
@@ -82,7 +94,9 @@ export class RateproDbInit1718454631340 implements MigrationInterface {
           },
           {
             name: 'quantity',
-            type: 'bigint',
+            type: 'decimal', // Change to decimal here
+            precision: 5, // Adjust precision as needed (total digits)
+            scale: 2, // Adjust scale as needed (decimal places)
           },
           {
             name: 'symbol',
@@ -90,7 +104,7 @@ export class RateproDbInit1718454631340 implements MigrationInterface {
           },
           {
             name: 'rating',
-            type: 'bigint',
+            type: 'varchar',
           },
           {
             name: 'deleted',
@@ -411,8 +425,11 @@ export class RateproDbInit1718454631340 implements MigrationInterface {
           ean: faker.number.int(), // Generate random EAN
           name: faker.commerce.productName(),
           title: faker.commerce.productDescription(),
+          type: 'FOOD',
           image_url:
             'https://elmercado.ma/wp-content/uploads/2023/12/Lindt-Excellence-Dark-85-Cocoa-100g.png',
+          description: faker.commerce.productDescription(),
+          storage_type: faker.commerce.productDescription(),
           rating: Math.floor(Math.random() * 101), // Random rating between 0 and 100 (adjust if needed)
           recommended: faker.datatype.boolean(),
           deleted: false,
@@ -420,16 +437,19 @@ export class RateproDbInit1718454631340 implements MigrationInterface {
 
         insertPromises.push(
           queryRunner.query(
-            `INSERT INTO products (ean, name, title, image_url, rating, recommended, deleted)
-             VALUES ($1, $2, $3, $4, $5, $6, $7)`,
+            `INSERT INTO products (ean, name, title, type, image_url, rating, recommended, deleted, description, storage_type)
+             VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10)`,
             [
               product.ean,
               product.name,
               product.title,
+              product.type,
               product.image_url,
               product.rating,
               product.recommended,
               product.deleted,
+              product.description,
+              product.storage_type,
             ],
           ),
         );
