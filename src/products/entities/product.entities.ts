@@ -1,7 +1,7 @@
-import { ProductType } from 'src/shared/enums/product-type.enum';
 import { Entity, PrimaryGeneratedColumn, Column, BaseEntity, OneToMany } from 'typeorm';
 import { Nutrition } from './nutrition.entities';
 import { Ingredient } from './ingredient.entities';
+import { ProductTypeEnum } from 'src/shared/enums/product-type.enum';
 
 @Entity('products')
 export class Product extends BaseEntity {
@@ -23,13 +23,13 @@ export class Product extends BaseEntity {
   @Column({ type: 'bigint' }) // Use bigint for larger rating values if needed
   rating: number;
 
-  @Column({ type: 'enum', enum: ProductType, default: ProductType.NONE })
-  type: ProductType;
+  @Column({ type: 'enum', enum: ProductTypeEnum, default: ProductTypeEnum.NONE })
+  type: ProductTypeEnum;
 
-  @OneToMany(() => Nutrition, (nutrition) => nutrition.product) // OneToMany relationship with Nutrition
+  @OneToMany(() => Nutrition, (nutrition) => nutrition.product, { cascade: true }) // OneToMany relationship with Nutrition
   nutritions: Nutrition[];
 
-  @OneToMany(() => Ingredient, (ingredient) => ingredient.product) // OneToMany relationship with Ingredient
+  @OneToMany(() => Ingredient, (ingredient) => ingredient.product, { cascade: true }) // OneToMany relationship with Ingredient
   ingredients: Ingredient[];
 
   @Column()

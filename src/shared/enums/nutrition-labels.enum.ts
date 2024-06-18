@@ -1,4 +1,4 @@
-export enum NutritionLabels {
+export enum NutritionNatureEnum {
   PROTEIN = 'Protein',
   SATURATED_FAT = 'Saturated fat',
   SUGAR = 'Sugar',

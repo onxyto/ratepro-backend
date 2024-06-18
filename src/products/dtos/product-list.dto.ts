@@ -1,4 +1,4 @@
-import { ProductType } from 'src/shared/enums/product-type.enum';
+import { ProductTypeEnum } from 'src/shared/enums/product-type.enum';
 
 export interface ProductListDto {
   id: string;
@@ -7,7 +7,7 @@ export interface ProductListDto {
   title: string;
   image_url: string;
   rating: number;
-  type: ProductType;
+  type: ProductTypeEnum;
   recommended: boolean;
   deleted: boolean;
   created_at: Date;

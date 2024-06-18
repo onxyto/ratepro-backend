@@ -1,4 +1,14 @@
-import { Controller, Get, Param, Post, Body } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Param,
+  Post,
+  Body,
+  NotFoundException,
+  HttpException,
+  Delete,
+  HttpStatus,
+} from '@nestjs/common';
 import { ProductsService } from './products.service';
 import { ProductDetailsDto } from './dtos/product-details.dto';
 import { ProductListDto } from './dtos/product-list.dto';
@@ -17,8 +27,31 @@ export class ProductsController {
   findAllProducts(): Promise<ProductListDto[]> {
     return this.productsService.getAllProducts();
   }
+
   @Post()
-  create(@Body() createProductDto: CreateProductDto) {
+  createProduct(@Body() createProductDto: CreateProductDto) {
     return this.productsService.createProduct(createProductDto);
+  }
+
+  @Post('/bulk')
+  createProducts(@Body() createProductDto: CreateProductDto[]) {
+    return this.productsService.createProducts(createProductDto);
+  }
+
+  @Delete(':id')
+  async deleteProduct(@Param('id') id: string): Promise<void> {
+    try {
+      const deleted = await this.productsService.deleteProduct(id);
+      if (!deleted) {
+        throw new NotFoundException('Product not found');
+      }
+      return;
+    } catch (error) {
+      if (error instanceof NotFoundException) {
+        throw error; // Re-throw NotFoundException for specific handling
+      } else {
+        throw new HttpException(error.message, HttpStatus.BAD_REQUEST);
+      }
+    }
   }
 }

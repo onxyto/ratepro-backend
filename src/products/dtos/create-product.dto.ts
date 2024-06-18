@@ -1,13 +1,16 @@
-import { ProductType } from 'src/shared/enums/product-type.enum';
+import { ProductTypeEnum } from 'src/shared/enums/product-type.enum';
+import { NutritionDto } from './nutrition.dto';
+import { IngredientDto } from './ingredient.dto';
 
 export class CreateProductDto {
   ean: string;
   name: string;
   title: string;
-  image_url: string;
-  type: ProductType;
+  imageUrl: string;
+  type: ProductTypeEnum;
   description: string;
-  storage_type: string;
+  nutritions?: NutritionDto[];
+  ingredients?: IngredientDto[];
+  storageType: string;
   rating: number;
-  recommended: boolean;
 }

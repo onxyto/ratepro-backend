@@ -60,6 +60,7 @@ export class RateproDbInit1718454631340 implements MigrationInterface {
           {
             name: 'deleted',
             type: 'boolean',
+            default: false,
           },
           {
             name: 'created_at',
@@ -109,6 +110,7 @@ export class RateproDbInit1718454631340 implements MigrationInterface {
           {
             name: 'deleted',
             type: 'boolean',
+            default: false,
           },
           {
             name: 'product_id',
@@ -175,6 +177,7 @@ export class RateproDbInit1718454631340 implements MigrationInterface {
           {
             name: 'deleted',
             type: 'boolean',
+            default: false,
           },
           {
             name: 'product_id',
@@ -233,6 +236,7 @@ export class RateproDbInit1718454631340 implements MigrationInterface {
           {
             name: 'deleted',
             type: 'boolean',
+            default: false,
           },
           {
             name: 'created_at',

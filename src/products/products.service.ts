@@ -63,6 +63,25 @@ export class ProductsService {
     }
   }
 
+  async createProducts(products: CreateProductDto[]): Promise<Product[]> {
+    const createdProducts: Product[] = [];
+    const manager = this.productRepo.manager;
+    try {
+      await manager.transaction(async (transactionalEntityManager) => {
+        for (const productDto of products) {
+          const mappedProduct = ProductMapper.mapToProduct(productDto);
+          const createdProduct = await transactionalEntityManager.save(Product, mappedProduct);
+          createdProducts.push(createdProduct);
+        }
+      });
+    } catch (error) {
+      // Handle transaction errors here
+      console.error('Error creating products:', error); // Log the error for debugging
+      throw new Error('An error occurred while creating products'); // Re-throw a generic error
+    }
+    return createdProducts;
+  }
+
   async update(id: string, updateProductDto: any) {
     const product = await this.findOne(id);
     if (!product) {
@@ -70,6 +89,11 @@ export class ProductsService {
     }
     Object.assign(product, updateProductDto);
     return await this.productRepo.save(product);
+  }
+
+  async deleteProduct(id: string): Promise<boolean> {
+    const result = await this.productRepo.delete(id);
+    return result.affected > 0; // Check if any rows were affected (deleted)
   }
 
   async remove(id: string) {
