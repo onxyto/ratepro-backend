@@ -222,11 +222,15 @@ export class RateproDbInit1718454631340 implements MigrationInterface {
             generationStrategy: 'uuid',
           },
           {
-            name: 'fullname',
+            name: 'first_name',
             type: 'varchar',
           },
           {
-            name: 'login',
+            name: 'last_name',
+            type: 'varchar',
+          },
+          {
+            name: 'email',
             type: 'varchar',
           },
           {

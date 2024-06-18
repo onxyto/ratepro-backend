@@ -4,8 +4,18 @@ import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { connectionSourceValues } from './shared/utils/datasource';
 import { ProductsModule } from './products/products.module';
+import { UserModule } from './user/user.module';
+import { ConfigModule } from '@nestjs/config';
 @Module({
-  imports: [TypeOrmModule.forRoot(connectionSourceValues as TypeOrmModuleOptions), ProductsModule],
+  imports: [
+    ConfigModule.forRoot({
+      isGlobal: true,
+      envFilePath: '.env',
+    }),
+    TypeOrmModule.forRoot(connectionSourceValues as TypeOrmModuleOptions),
+    ProductsModule,
+    UserModule,
+  ],
   controllers: [AppController],
   providers: [AppService],
 })
