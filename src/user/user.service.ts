@@ -5,6 +5,7 @@ import { FirebaseAdmin } from '../../firebase.setup';
 import { User } from './entities/user.entities';
 import { FindOneOptions, Repository } from 'typeorm';
 import { InjectRepository } from '@nestjs/typeorm';
+import { UserRolesEnum } from 'src/shared/enums/user-roles.enum';
 
 @Injectable()
 export class UserService {
@@ -16,6 +17,7 @@ export class UserService {
 
   async createUser(userRequest: UserDto): Promise<User> {
     const { email, password, firstName, lastName, role } = userRequest;
+    const userRole = role ? role : UserRolesEnum.USER;
     const app = this.admin.setup();
 
     const existingUser = await this.userRepo.findOne({ where: { email } } as FindOneOptions<User>);
@@ -28,14 +30,14 @@ export class UserService {
         password,
         displayName: `${firstName} ${lastName}`,
       });
-      await app.auth().setCustomUserClaims(createdUser.uid, { role });
+      await app.auth().setCustomUserClaims(createdUser.uid, { userRole });
 
       // Create a new user entity with hashed password
       const newUser = await this.userRepo.create({
         email,
         firstName,
         lastName,
-        role,
+        role: userRole,
       });
 
       // Save the new user to the database

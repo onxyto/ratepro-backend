@@ -1,6 +1,5 @@
 import { BaseEntity, Column, Entity, ManyToOne, PrimaryGeneratedColumn } from 'typeorm';
 import { Product } from './product.entities';
-import { NutritionNatureEnum } from 'src/shared/enums/nutrition-labels.enum';
 
 @Entity('nutritions')
 export class Nutrition extends BaseEntity {

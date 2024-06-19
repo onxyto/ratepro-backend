@@ -10,9 +10,4 @@ export class UserController {
   signup(@Body() userRequest: UserDto) {
     return this.userService.createUser(userRequest);
   }
-
-  @Post('/signin')
-  signin(@Body() userRequest: UserDto) {
-    return this.userService.createUser(userRequest);
-  }
 }

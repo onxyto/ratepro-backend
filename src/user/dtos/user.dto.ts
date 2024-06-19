@@ -1,12 +1,4 @@
-import {
-  IsEmail,
-  IsNotEmpty,
-  MaxLength,
-  MinLength,
-  Matches,
-  IsEnum,
-  IsAlpha,
-} from 'class-validator';
+import { IsEmail, IsNotEmpty, MaxLength, MinLength, Matches, IsEnum } from 'class-validator';
 import { UserRolesEnum } from 'src/shared/enums/user-roles.enum';
 
 export class UserDto {
@@ -22,16 +14,8 @@ export class UserDto {
   })
   password: string;
 
-  @IsNotEmpty()
-  @MinLength(2)
-  @MaxLength(20)
-  @IsAlpha()
   firstName: string;
 
-  @IsNotEmpty()
-  @MinLength(2)
-  @MaxLength(20)
-  @IsAlpha()
   lastName: string;
 
   @IsNotEmpty()
