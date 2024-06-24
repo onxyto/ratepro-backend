@@ -6,6 +6,7 @@ import { connectionSourceValues } from './shared/utils/datasource';
 import { ProductsModule } from './products/products.module';
 import { UserModule } from './user/user.module';
 import { ConfigModule } from '@nestjs/config';
+import { FirebaseAdmin } from 'firebase.setup';
 @Module({
   imports: [
     ConfigModule.forRoot({
@@ -17,6 +18,6 @@ import { ConfigModule } from '@nestjs/config';
     UserModule,
   ],
   controllers: [AppController],
-  providers: [AppService],
+  providers: [AppService, FirebaseAdmin],
 })
 export class AppModule {}

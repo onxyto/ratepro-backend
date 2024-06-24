@@ -23,7 +23,7 @@ export class ProductsService {
 
       // Check if product is found
       if (!product) {
-        return undefined; // Return undefined if product doesn't exist
+        throw new NotFoundException('Product not found');
       }
 
       // Return product details (assuming ProductDetailsDto has necessary properties)

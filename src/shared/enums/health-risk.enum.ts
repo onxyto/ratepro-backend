@@ -4,4 +4,5 @@ export enum HealthRiskEnum {
   PED = 'PED', // Potential Endocrine disruptor
   P = 'P', // Pollutant
   I = 'I', // Irritant
+  NONE = 'NONE', // NONE
 }

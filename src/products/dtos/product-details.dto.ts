@@ -11,6 +11,8 @@ export interface ProductDetailsDto {
   rating: number;
   type: ProductTypeEnum;
   recommended: boolean;
+  description: string;
+  storage_type: string;
   nutritions: NutritionDto[];
   ingredients: IngredientDto[];
   deleted: boolean;

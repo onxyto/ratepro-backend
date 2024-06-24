@@ -9,6 +9,8 @@ export interface ProductListDto {
   rating: number;
   type: ProductTypeEnum;
   recommended: boolean;
+  description: string;
+  storage_type: string;
   deleted: boolean;
   created_at: Date;
   updated_at: Date;

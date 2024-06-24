@@ -1,5 +1,6 @@
 import { UserRolesEnum } from 'src/shared/enums/user-roles.enum';
-import { Entity, PrimaryGeneratedColumn, Column } from 'typeorm';
+import { Entity, PrimaryGeneratedColumn, Column, ManyToMany, JoinTable } from 'typeorm';
+import { FavoriteProduct } from './favorite-product.entities';
 
 @Entity('users')
 export class User {
@@ -17,6 +18,14 @@ export class User {
 
   @Column({ type: 'varchar', nullable: true })
   role: UserRolesEnum;
+
+  @ManyToMany(() => FavoriteProduct, (favoriteProduct) => favoriteProduct.user) // ManyToMany relationship with FavoriteProduct
+  @JoinTable({
+    name: 'favorite_products',
+    joinColumn: { name: 'user_id', referencedColumnName: 'id' },
+    inverseJoinColumn: { name: 'product_id', referencedColumnName: 'id' },
+  }) // Join table configuration
+  favorites: FavoriteProduct[];
 
   @Column({ type: 'boolean', default: false })
   deleted: boolean;

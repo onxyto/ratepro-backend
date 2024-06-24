@@ -11,13 +11,20 @@ export class AuthGuard implements CanActivate {
 
   async canActivate(context: ExecutionContext): Promise<boolean> {
     const app = this.admin.setup();
-    const idToken = context.getArgs()[0]?.headers?.authorization.split(' ')[1];
+
+    const idToken = context.getArgs()[0]?.headers?.authorization?.split(' ')[1];
+    if (!idToken) {
+      throw new UnauthorizedException();
+    }
+    console.log('idToken', context.getArgs()[0]?.headers?.authorization.split(' ')[1]);
 
     const permissions = this.reflector.get<string[]>('permissions', context.getHandler());
+    console.log('permissions', permissions);
     try {
       const claims = await app.auth().verifyIdToken(idToken);
+      console.log('claims', claims);
 
-      if (claims.role === permissions[0]) {
+      if (permissions.includes(claims.userRole)) {
         return true;
       }
       throw new UnauthorizedException();
