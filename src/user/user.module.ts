@@ -4,10 +4,10 @@ import { FirebaseAdmin } from '../../firebase.setup';
 import { UserService } from './user.service';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { User } from './entities/user.entities';
-import { FavoriteProduct } from './entities/favorite-product.entities';
+import { HistoryProduct } from 'src/history/entities/history-product.entities';
 
 @Module({
-  imports: [TypeOrmModule.forFeature([User, FavoriteProduct])],
+  imports: [TypeOrmModule.forFeature([User, HistoryProduct])],
   controllers: [UserController],
   providers: [UserService, FirebaseAdmin],
 })

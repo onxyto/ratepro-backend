@@ -16,13 +16,10 @@ export class AuthGuard implements CanActivate {
     if (!idToken) {
       throw new UnauthorizedException();
     }
-    console.log('idToken', context.getArgs()[0]?.headers?.authorization.split(' ')[1]);
 
     const permissions = this.reflector.get<string[]>('permissions', context.getHandler());
-    console.log('permissions', permissions);
     try {
       const claims = await app.auth().verifyIdToken(idToken);
-      console.log('claims', claims);
 
       if (permissions.includes(claims.userRole)) {
         return true;

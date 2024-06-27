@@ -5,9 +5,10 @@ import { Product } from 'src/products/entities/product.entities';
 import { Ingredient } from 'src/products/entities/ingredient.entities';
 import { Nutrition } from 'src/products/entities/nutrition.entities';
 import { User } from 'src/user/entities/user.entities';
-import { FavoriteProduct } from 'src/user/entities/favorite-product.entities';
+import { FavoriteProduct } from 'src/products/entities/favorite-product.entities';
+import { HistoryProduct } from 'src/history/entities/history-product.entities';
 
-const entities = [Product, Ingredient, Nutrition, User, FavoriteProduct];
+const entities = [Product, Ingredient, Nutrition, User, FavoriteProduct, HistoryProduct];
 export const connectionSourceValues = {
   type: 'postgres',
   host: 'localhost',

@@ -1,6 +1,6 @@
 import { Product } from 'src/products/entities/product.entities';
 import { Column, Entity, ManyToOne, PrimaryGeneratedColumn } from 'typeorm';
-import { User } from './user.entities';
+import { User } from '../../user/entities/user.entities';
 
 @Entity('favorite_products')
 export class FavoriteProduct {

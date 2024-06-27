@@ -1,7 +1,8 @@
-import { Entity, PrimaryGeneratedColumn, Column, BaseEntity, OneToMany } from 'typeorm';
+import { Entity, PrimaryGeneratedColumn, Column, BaseEntity, OneToMany, ManyToMany } from 'typeorm';
 import { Nutrition } from './nutrition.entities';
 import { Ingredient } from './ingredient.entities';
 import { ProductTypeEnum } from 'src/shared/enums/product-type.enum';
+import { User } from 'src/user/entities/user.entities';
 
 @Entity('products')
 export class Product extends BaseEntity {
@@ -31,6 +32,12 @@ export class Product extends BaseEntity {
 
   @OneToMany(() => Ingredient, (ingredient) => ingredient.product, { cascade: true }) // OneToMany relationship with Ingredient
   ingredients: Ingredient[];
+
+  @ManyToMany(() => User, (user) => user.products, {
+    onDelete: 'NO ACTION',
+    onUpdate: 'NO ACTION',
+  })
+  users?: User[];
 
   @Column()
   description: string;

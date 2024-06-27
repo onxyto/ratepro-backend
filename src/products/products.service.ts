@@ -6,11 +6,17 @@ import { ProductDetailsDto } from './dtos/product-details.dto';
 import { ProductMapper } from 'src/shared/mappers/product.mapper';
 import { Product } from './entities/product.entities';
 import { CreateProductDto } from './dtos/create-product.dto';
+import { User } from 'src/user/entities/user.entities';
+import { FavoriteProduct } from './entities/favorite-product.entities';
 @Injectable()
 export class ProductsService {
   constructor(
     @InjectRepository(Product)
     private productRepo: Repository<Product>,
+    @InjectRepository(User)
+    private userRepo: Repository<User>,
+    @InjectRepository(FavoriteProduct)
+    private favoriteProductRepo: Repository<FavoriteProduct>,
   ) {}
 
   async getProductDetails(id: string): Promise<ProductDetailsDto | undefined> {
@@ -82,29 +88,127 @@ export class ProductsService {
     return createdProducts;
   }
 
-  async update(id: string, updateProductDto: any) {
-    const product = await this.findOne(id);
+  async addProductToFavorite(productId: string, email: string): Promise<void> {
+    const user = await this.userRepo.findOne({
+      where: { email },
+    });
+    const product = await this.productRepo.findOne({
+      where: { id: productId },
+    });
     if (!product) {
       throw new NotFoundException();
     }
-    Object.assign(product, updateProductDto);
-    return await this.productRepo.save(product);
+    const createFavoriteProduct = {
+      user,
+      product,
+    };
+
+    try {
+      const productFavoriteSaved = await this.favoriteProductRepo.save(createFavoriteProduct);
+
+      if (!productFavoriteSaved) {
+        return undefined;
+      }
+    } catch (error: any) {
+      throw error;
+    }
   }
+
+  async deleteProductFromFavorite(productId: string, email: string): Promise<void> {
+    const user = await this.userRepo.findOne({
+      where: { email },
+    });
+    const product = await this.productRepo.findOne({
+      where: { id: productId },
+    });
+    if (!product) {
+      throw new NotFoundException();
+    }
+    const deleteFavoriteProduct = {
+      user,
+      product,
+    };
+    try {
+      const productFavoriteDeleted = await this.favoriteProductRepo.delete(deleteFavoriteProduct);
+
+      if (!productFavoriteDeleted) {
+        return undefined;
+      }
+    } catch (error: any) {
+      throw error;
+    }
+  }
+
+  async addProductToBlacklist(productId: string, email: string): Promise<void> {
+    const user = await this.userRepo.findOne({
+      where: { email },
+    });
+    const product = await this.productRepo.findOne({
+      where: { id: productId },
+    });
+    if (!product) {
+      throw new NotFoundException();
+    }
+    const createFavoriteProduct = {
+      user,
+      product,
+    };
+
+    try {
+      const productFavoriteSaved = await this.favoriteProductRepo.save(createFavoriteProduct);
+
+      if (!productFavoriteSaved) {
+        return undefined;
+      }
+    } catch (error: any) {
+      throw error;
+    }
+  }
+
+  async deleteProductFromBlackList(productId: string, email: string): Promise<void> {
+    const user = await this.userRepo.findOne({
+      where: { email },
+    });
+    const product = await this.productRepo.findOne({
+      where: { id: productId },
+    });
+    if (!product) {
+      throw new NotFoundException();
+    }
+    const deleteFavoriteProduct = {
+      user,
+      product,
+    };
+    try {
+      const productFavoriteDeleted = await this.favoriteProductRepo.delete(deleteFavoriteProduct);
+
+      if (!productFavoriteDeleted) {
+        return undefined;
+      }
+    } catch (error: any) {
+      throw error;
+    }
+  }
+
+  // async update(id: string, updateProductDto: any) {
+  //   const product = await this.productRepo.findOneBy({ id });
+  //   if (!product) {
+  //     throw new NotFoundException();
+  //   }
+  //   Object.assign(product, updateProductDto);
+  //   return await this.productRepo.save(product);
+  // }
 
   async deleteProduct(id: string): Promise<boolean> {
     const result = await this.productRepo.delete(id);
     return result.affected > 0; // Check if any rows were affected (deleted)
   }
 
-  async remove(id: string) {
-    const product = await this.findOne(id);
-    if (!product) {
-      throw new NotFoundException();
-    }
-    return await this.productRepo.remove(product);
-  }
-
-  findOne(id: string): Promise<Product | null> {
-    return this.productRepo.findOneBy({ id });
-  }
+  // async remove(id: string) {
+  //   const product = await this.productRepo.findOneBy({ id });
+  //   if (!product) {
+  //     throw new NotFoundException();
+  //   }
+  //   return await this.productRepo.remove(product);
+  // }
 }
