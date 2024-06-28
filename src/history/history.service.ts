@@ -1,11 +1,11 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { ProductListDto } from 'src/products/dtos/product-list.dto';
-import { Product } from 'src/products/entities/product.entities';
-import { User } from 'src/user/entities/user.entities';
 import { Repository } from 'typeorm';
 import { HistoryProduct } from './entities/history-product.entities';
 import { ProductMapper } from 'src/shared/mappers/product.mapper';
+import {User} from "../user/entities/user.entities";
+import {Product} from "../products/entities/product.entities";
+import {ProductListDto} from "../products/dtos/product-list.dto";
 
 @Injectable()
 export class HistoryService {

@@ -1,12 +1,12 @@
 import { DataSource, DataSourceOptions } from 'typeorm';
 import { join } from 'path';
 import { SnakeNamingStrategy } from 'typeorm-naming-strategies';
-import { Product } from 'src/products/entities/product.entities';
-import { Ingredient } from 'src/products/entities/ingredient.entities';
-import { Nutrition } from 'src/products/entities/nutrition.entities';
-import { User } from 'src/user/entities/user.entities';
-import { FavoriteProduct } from 'src/products/entities/favorite-product.entities';
-import { HistoryProduct } from 'src/history/entities/history-product.entities';
+import {Product} from "../../products/entities/product.entities";
+import {Ingredient} from "../../products/entities/ingredient.entities";
+import {Nutrition} from "../../products/entities/nutrition.entities";
+import {User} from "../../user/entities/user.entities";
+import {FavoriteProduct} from "../../products/entities/favorite-product.entities";
+import {HistoryProduct} from "../../history/entities/history-product.entities";
 
 const entities = [Product, Ingredient, Nutrition, User, FavoriteProduct, HistoryProduct];
 export const connectionSourceValues = {

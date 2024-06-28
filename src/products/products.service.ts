@@ -3,11 +3,11 @@ import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { ProductDetailsDto } from './dtos/product-details.dto';
-import { ProductMapper } from 'src/shared/mappers/product.mapper';
 import { Product } from './entities/product.entities';
 import { CreateProductDto } from './dtos/create-product.dto';
-import { User } from 'src/user/entities/user.entities';
 import { FavoriteProduct } from './entities/favorite-product.entities';
+import {User} from "../user/entities/user.entities";
+import {ProductMapper} from "../shared/mappers/product.mapper";
 @Injectable()
 export class ProductsService {
   constructor(

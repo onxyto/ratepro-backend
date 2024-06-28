@@ -1,8 +1,9 @@
 import { Entity, PrimaryGeneratedColumn, Column, BaseEntity, OneToMany, ManyToMany } from 'typeorm';
 import { Nutrition } from './nutrition.entities';
 import { Ingredient } from './ingredient.entities';
-import { ProductTypeEnum } from 'src/shared/enums/product-type.enum';
-import { User } from 'src/user/entities/user.entities';
+import {ProductTypeEnum} from "../../shared/enums/product-type.enum";
+import {User} from "../../user/entities/user.entities";
+
 
 @Entity('products')
 export class Product extends BaseEntity {

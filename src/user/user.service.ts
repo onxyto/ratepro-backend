@@ -5,7 +5,8 @@ import { FirebaseAdmin } from '../../firebase.setup';
 import { User } from './entities/user.entities';
 import { FindOneOptions, Repository } from 'typeorm';
 import { InjectRepository } from '@nestjs/typeorm';
-import { UserRolesEnum } from 'src/shared/enums/user-roles.enum';@Injectable()
+import {UserRolesEnum} from "../shared/enums/user-roles.enum";
+@Injectable()
 export class UserService {
   constructor(
     private readonly admin: FirebaseAdmin,

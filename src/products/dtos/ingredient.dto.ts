@@ -1,4 +1,5 @@
-import { HealthRiskEnum } from 'src/shared/enums/health-risk.enum';
+import {HealthRiskEnum} from "../../shared/enums/health-risk.enum";
+
 
 export interface IngredientDto {
   name: string;

@@ -14,10 +14,11 @@ import { ProductsService } from './products.service';
 import { ProductDetailsDto } from './dtos/product-details.dto';
 import { ProductListDto } from './dtos/product-list.dto';
 import { CreateProductDto } from './dtos/create-product.dto';
-import { Auth } from 'src/shared/decorators/auth.decorator';
-import { UserRolesEnum } from 'src/shared/enums/user-roles.enum';
-import { CurrentUserInterceptor } from 'src/shared/interceptors/current-user.interceptor';
-import { CurrentUser } from 'src/shared/decorators/current-user.decorator';
+import {CurrentUserInterceptor} from "../shared/interceptors/current-user.interceptor";
+import {UserRolesEnum} from "../shared/enums/user-roles.enum";
+import {Auth} from "../shared/decorators/auth.decorator";
+import {CurrentUser} from "../shared/decorators/current-user.decorator";
+
 
 @Controller('products')
 @UseInterceptors(CurrentUserInterceptor)

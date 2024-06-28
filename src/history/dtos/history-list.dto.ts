@@ -1,4 +1,5 @@
-import { Product } from 'src/products/entities/product.entities';
+import {Product} from "../../products/entities/product.entities";
+
 
 export interface HistoryListDto {
   id: string;

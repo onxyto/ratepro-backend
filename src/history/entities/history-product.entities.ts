@@ -1,6 +1,7 @@
-import { Product } from 'src/products/entities/product.entities';
-import { User } from 'src/user/entities/user.entities';
+
 import { Column, Entity, JoinColumn, ManyToOne, PrimaryColumn } from 'typeorm';
+import {User} from "../../user/entities/user.entities";
+import {Product} from "../../products/entities/product.entities";
 
 @Entity('history_products')
 export class HistoryProduct {
