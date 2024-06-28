@@ -1,9 +1,9 @@
 import { Controller, Delete, Get, HttpException, HttpStatus, Param, Post } from '@nestjs/common';
 import { HistoryService } from './history.service';
-import {CurrentUser} from "../shared/decorators/current-user.decorator";
-import {ProductListDto} from "../products/dtos/product-list.dto";
-import {UserRolesEnum} from "../shared/enums/user-roles.enum";
-import {Auth} from "../shared/decorators/auth.decorator";
+import { CurrentUser } from '../shared/decorators/current-user.decorator';
+import { ProductListDto } from '../products/dtos/product-list.dto';
+import { UserRolesEnum } from '../shared/enums/user-roles.enum';
+import { Auth } from '../shared/decorators/auth.decorator';
 
 @Controller('history')
 export class HistoryController {

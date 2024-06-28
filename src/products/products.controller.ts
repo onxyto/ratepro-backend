@@ -14,17 +14,25 @@ import { ProductsService } from './products.service';
 import { ProductDetailsDto } from './dtos/product-details.dto';
 import { ProductListDto } from './dtos/product-list.dto';
 import { CreateProductDto } from './dtos/create-product.dto';
-import {CurrentUserInterceptor} from "../shared/interceptors/current-user.interceptor";
-import {UserRolesEnum} from "../shared/enums/user-roles.enum";
-import {Auth} from "../shared/decorators/auth.decorator";
-import {CurrentUser} from "../shared/decorators/current-user.decorator";
-
+import { CurrentUserInterceptor } from '../shared/interceptors/current-user.interceptor';
+import { UserRolesEnum } from '../shared/enums/user-roles.enum';
+import { Auth } from '../shared/decorators/auth.decorator';
+import { CurrentUser } from '../shared/decorators/current-user.decorator';
 
 @Controller('products')
 @UseInterceptors(CurrentUserInterceptor)
 export class ProductsController {
   constructor(private readonly productsService: ProductsService) {}
 
+  @Get('/recommended')
+  getRecommendedProducts(): Promise<ProductListDto[]> {
+    return this.productsService.getRecommendedProducts();
+  }
+
+  @Get('/search/:productName')
+  searchProductByName(@Param('productName') keyword: string): Promise<ProductDetailsDto> {
+    return this.productsService.searchProductByName(keyword);
+  }
   @Get(':id')
   findProductBy(@Param('id') id: string): Promise<ProductDetailsDto> {
     return this.productsService.getProductDetails(id);

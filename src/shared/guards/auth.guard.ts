@@ -18,9 +18,11 @@ export class AuthGuard implements CanActivate {
     }
 
     const permissions = this.reflector.get<string[]>('permissions', context.getHandler());
+    console.log('permissions', permissions);
     try {
       const claims = await app.auth().verifyIdToken(idToken);
 
+      console.log('claims.userRole', claims.userRole);
       if (permissions.includes(claims.userRole)) {
         return true;
       }

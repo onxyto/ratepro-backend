@@ -3,9 +3,9 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { HistoryProduct } from './entities/history-product.entities';
 import { ProductMapper } from 'src/shared/mappers/product.mapper';
-import {User} from "../user/entities/user.entities";
-import {Product} from "../products/entities/product.entities";
-import {ProductListDto} from "../products/dtos/product-list.dto";
+import { User } from '../user/entities/user.entities';
+import { Product } from '../products/entities/product.entities';
+import { ProductListDto } from '../products/dtos/product-list.dto';
 
 @Injectable()
 export class HistoryService {

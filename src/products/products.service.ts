@@ -6,8 +6,9 @@ import { ProductDetailsDto } from './dtos/product-details.dto';
 import { Product } from './entities/product.entities';
 import { CreateProductDto } from './dtos/create-product.dto';
 import { FavoriteProduct } from './entities/favorite-product.entities';
-import {User} from "../user/entities/user.entities";
-import {ProductMapper} from "../shared/mappers/product.mapper";
+import { User } from '../user/entities/user.entities';
+import { ProductMapper } from '../shared/mappers/product.mapper';
+import { ProductListDto } from './dtos/product-list.dto';
 @Injectable()
 export class ProductsService {
   constructor(
@@ -39,7 +40,40 @@ export class ProductsService {
     }
   }
 
-  async getAllProducts() {
+  async searchProductByName(keyword: string): Promise<ProductDetailsDto | undefined> {
+    try {
+      // Fetch product with related nutritions using eager loading
+      const product = await this.productRepo.findOne({
+        where: { name: keyword },
+        relations: ['nutritions', 'ingredients'],
+      });
+
+      // Check if product is found
+      if (!product) {
+        throw new NotFoundException('Product not found');
+      }
+
+      // Return product details (assuming ProductDetailsDto has necessary properties)
+      return ProductMapper.mapToProductDetailsDto(product);
+    } catch (error: any) {
+      throw error; // Re-throw the error for handling at a higher level
+    }
+  }
+  async getRecommendedProducts(): Promise<ProductListDto[]> {
+    try {
+      const products = await this.productRepo.find({
+        where: { recommended: true },
+      });
+      if (!products) {
+        return undefined;
+      }
+      return ProductMapper.mapToProductListDto(products);
+    } catch (error: any) {
+      throw error;
+    }
+  }
+
+  async getAllProducts(): Promise<ProductListDto[]> {
     try {
       const products = await this.productRepo.find();
 

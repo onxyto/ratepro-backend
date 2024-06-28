@@ -1,25 +1,15 @@
-import { IsEmail, IsNotEmpty, MaxLength, MinLength, Matches, IsEnum } from 'class-validator';
-import {UserRolesEnum} from "../../shared/enums/user-roles.enum";
-
+import { UserRolesEnum } from './../../shared/enums/user-roles.enum';
+import { IsEnum } from 'class-validator';
 
 export class UserDto {
-  @IsEmail()
-  @IsNotEmpty()
   email: string;
 
-  @IsNotEmpty()
-  @MinLength(8)
-  @MaxLength(20)
-  @Matches(/^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#$%^&*]).{8,20}$/, {
-    message: 'password too weak',
-  })
   password: string;
 
   firstName: string;
 
   lastName: string;
 
-  @IsNotEmpty()
   @IsEnum(UserRolesEnum, { each: true })
   role: UserRolesEnum;
 }
