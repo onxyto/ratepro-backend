@@ -1,7 +1,6 @@
-import {ProductTypeEnum} from "../../shared/enums/product-type.enum";
-import {NutritionDto} from "../../shared/dtos/nutrition.dto";
-import {IngredientDto} from "../../shared/dtos/ingredient.dto";
-
+import { ProductTypeEnum } from '../../shared/enums/product-type.enum';
+import { NutritionDto } from '../../shared/dtos/nutrition.dto';
+import { IngredientDto } from '../../shared/dtos/ingredient.dto';
 
 export interface ProductDetailsDto {
   id: string;

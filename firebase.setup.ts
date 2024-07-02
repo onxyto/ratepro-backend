@@ -1,22 +1,22 @@
 import { Injectable, OnApplicationBootstrap } from '@nestjs/common';
 import { readFile } from 'fs/promises';
 import * as admin from 'firebase-admin';
-let app: admin.app.App = null;
+
 @Injectable()
 export class FirebaseAdmin implements OnApplicationBootstrap {
+  private static app: admin.app.App = null;
+
   async onApplicationBootstrap() {
-    if (!app) {
-      const firebaseServiceAccountFile = await readFile(
-        './config/firebaseServiceAccountKey.json',
-        'utf8',
-      );
-      const serviceAccount = await JSON.parse(firebaseServiceAccountFile);
-      app = admin.initializeApp({
+    if (!FirebaseAdmin.app) {
+      const firebaseServiceAccountFile = await readFile('./firebaseServiceAccountKey.json', 'utf8');
+      const serviceAccount = JSON.parse(firebaseServiceAccountFile);
+      FirebaseAdmin.app = admin.initializeApp({
         credential: admin.credential.cert(serviceAccount),
       });
     }
   }
-  setup() {
-    return app;
+
+  getApp() {
+    return FirebaseAdmin.app;
   }
 }

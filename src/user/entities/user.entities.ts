@@ -1,8 +1,7 @@
-
 import { Entity, PrimaryGeneratedColumn, Column, ManyToMany, JoinTable } from 'typeorm';
 import { FavoriteProduct } from '../../products/entities/favorite-product.entities';
-import {UserRolesEnum} from "../../shared/enums/user-roles.enum";
-import {Product} from "../../products/entities/product.entities";
+import { UserRolesEnum } from '../../shared/enums/user-roles.enum';
+import { Product } from '../../products/entities/product.entities';
 
 @Entity('users')
 export class User {

@@ -44,7 +44,7 @@ export class ProductsController {
     return this.productsService.getAllProducts();
   }
 
-  @Post()
+  @Post('/create')
   createProduct(@Body() createProductDto: CreateProductDto) {
     return this.productsService.createProduct(createProductDto);
   }

@@ -4,7 +4,7 @@ import { FirebaseAdmin } from '../../firebase.setup';
 import { UserService } from './user.service';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { User } from './entities/user.entities';
-import {HistoryProduct} from "../history/entities/history-product.entities";
+import { HistoryProduct } from '../history/entities/history-product.entities';
 
 @Module({
   imports: [TypeOrmModule.forFeature([User, HistoryProduct])],

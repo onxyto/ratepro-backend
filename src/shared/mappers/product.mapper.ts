@@ -46,7 +46,7 @@ export class ProductMapper {
       ean: newProduct.ean,
       name: newProduct.name,
       title: newProduct.title,
-      image_url: newProduct.imageUrl,
+      image_url: newProduct.imageurl,
       type: newProduct.type,
       description: newProduct.description,
       storage_type: newProduct.storageType,
@@ -68,7 +68,7 @@ export class ProductMapper {
       // COSMETIC TYPE
       const ingredients: Partial<Ingredient>[] = newProduct.ingredients.map((i) => ({
         risk_rate: i.riskRate,
-        health_risk: i.healthRisk,
+        health_risk: i.healthrisk,
         scientific_sources: i.scientificResources,
         ...i,
       }));

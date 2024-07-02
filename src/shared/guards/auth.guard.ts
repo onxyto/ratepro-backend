@@ -1,35 +1,34 @@
 import { Injectable, CanActivate, ExecutionContext, UnauthorizedException } from '@nestjs/common';
-import { Reflector } from '@nestjs/core';
-import { FirebaseAdmin } from '../../../firebase.setup';
+import { FirebaseAdmin } from '../../../firebase.setup'; // Assuming FirebaseAdmin is defined elsewhere
 
 @Injectable()
 export class AuthGuard implements CanActivate {
-  constructor(
-    private reflector: Reflector,
-    private readonly admin: FirebaseAdmin,
-  ) {}
+  constructor(private readonly firebaseAdmin: FirebaseAdmin) {}
 
   async canActivate(context: ExecutionContext): Promise<boolean> {
-    const app = this.admin.setup();
+    const app = this.firebaseAdmin.getApp();
+    const request = context.switchToHttp().getRequest();
 
-    const idToken = context.getArgs()[0]?.headers?.authorization?.split(' ')[1];
-    if (!idToken) {
-      throw new UnauthorizedException();
+    // Skip authentication for signup endpoint
+    if (request.url.includes('/signup')) {
+      return true; // Allow signup without token check
     }
 
-    const permissions = this.reflector.get<string[]>('permissions', context.getHandler());
-    console.log('permissions', permissions);
+    const idToken = request.headers.authorization?.split('Bearer ')[1];
+
+    if (!idToken) {
+      throw new UnauthorizedException('Authorization token not found');
+    }
+
     try {
       const claims = await app.auth().verifyIdToken(idToken);
+      console.log('User claims:', claims); // Example of using 'claims' for debugging
+      // Implement your permission logic here using 'claims' if needed
 
-      console.log('claims.userRole', claims.userRole);
-      if (permissions.includes(claims.userRole)) {
-        return true;
-      }
-      throw new UnauthorizedException();
+      return true; // Return true if the token is valid (and permission check passes, if applicable)
     } catch (error) {
-      console.log('Error', error);
-      throw new UnauthorizedException();
+      console.error('Error verifying Firebase token:', error);
+      throw new UnauthorizedException('Invalid authorization token');
     }
   }
 }

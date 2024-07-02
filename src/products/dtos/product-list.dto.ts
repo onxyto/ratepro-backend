@@ -1,5 +1,4 @@
-import {ProductTypeEnum} from "../../shared/enums/product-type.enum";
-
+import { ProductTypeEnum } from '../../shared/enums/product-type.enum';
 
 export interface ProductListDto {
   id: string;

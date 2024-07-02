@@ -3,48 +3,49 @@ import { Injectable, BadRequestException } from '@nestjs/common';
 import { UserDto } from './dtos/user.dto';
 import { FirebaseAdmin } from '../../firebase.setup';
 import { User } from './entities/user.entities';
-import { FindOneOptions, Repository } from 'typeorm';
+import { Repository } from 'typeorm';
 import { InjectRepository } from '@nestjs/typeorm';
-import {UserRolesEnum} from "../shared/enums/user-roles.enum";
+import { UserRolesEnum } from '../shared/enums/user-roles.enum';
 @Injectable()
 export class UserService {
   constructor(
-    private readonly admin: FirebaseAdmin,
+    private readonly firebaseAdmin: FirebaseAdmin,
     @InjectRepository(User)
-    private userRepo: Repository<User>,
+    private readonly userRepository: Repository<User>,
   ) {}
 
   async createUser(userRequest: UserDto): Promise<User> {
     const { email, password, firstName, lastName, role } = userRequest;
-    const userRole = role ? role : UserRolesEnum.USER;
-    const app = this.admin.setup();
+    const userRole = role || UserRolesEnum.USER;
 
-    const existingUser = await this.userRepo.findOne({ where: { email } } as FindOneOptions<User>);
-    if (existingUser) {
-      throw new BadRequestException('Email already exists');
-    }
+    // Get Firebase Admin SDK instance
+    const app = this.firebaseAdmin.getApp();
+
     try {
+      // Create user in Firebase Authentication
       const createdUser = await app.auth().createUser({
         email,
         password,
         displayName: `${firstName} ${lastName}`,
       });
-      await app.auth().setCustomUserClaims(createdUser.uid, { userRole });
 
-      // Create a new user entity with hashed password
-      const newUser = await this.userRepo.create({
+      // Set custom claims
+      await app.auth().setCustomUserClaims(createdUser.uid, { role: userRole });
+
+      // Create user entity
+      const newUser = this.userRepository.create({
         email,
         firstName,
         lastName,
         role: userRole,
       });
 
-      // Save the new user to the database
-      const savedUser = await this.userRepo.save(newUser);
-      return savedUser; // Return the created user
+      // Save user to database
+      const savedUser = await this.userRepository.save(newUser);
+      return savedUser;
     } catch (error) {
-      console.error('Error creating user:', error); // Log the error for debugging
-      throw new BadRequestException('Failed to create user'); // Generic error message for the client
+      console.error('Error creating user:', error);
+      throw new BadRequestException('Failed to create user');
     }
   }
 }
