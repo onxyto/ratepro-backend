@@ -14,8 +14,8 @@ export const connectionSourceValues = {
   host: 'localhost',
   port: 5432,
   username: 'postgres',
-  password: '0000',
-  database: 'tp',
+  password: '    ',
+  database: 'ratepro',
   logging: true,
   entities: [...entities], // __dirname + '/../**/*.entities{.ts,.js}'
   migrations: [join(__dirname, '/../../', 'database/migrations/**/*{.ts,.js}')],

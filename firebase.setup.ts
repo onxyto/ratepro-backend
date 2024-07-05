@@ -8,7 +8,7 @@ export class FirebaseAdmin implements OnApplicationBootstrap {
 
   async onApplicationBootstrap() {
     if (!FirebaseAdmin.app) {
-      const firebaseServiceAccountFile = await readFile('./firebaseServiceAccountKey.json', 'utf8');
+      const firebaseServiceAccountFile = await readFile('./config/firebaseServiceAccountKey.json', 'utf8');
       const serviceAccount = JSON.parse(firebaseServiceAccountFile);
       FirebaseAdmin.app = admin.initializeApp({
         credential: admin.credential.cert(serviceAccount),
